@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New Social Forms</title>
+  <style>
+    /* ── FONTS ─────────────────────────────────────────────── */
+    @font-face {
+      font-family: UN-11;
+      src: url(https://newsocialforms.org/fonts/UN-11/UN-11.woff2) format('woff2'),
+           url(https://newsocialforms.org/fonts/UN-11/UN-11.woff) format('woff');
+      font-display: swap;
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: UN-11;
+      src: url(https://newsocialforms.org/fonts/UN-11/UN-11-italic.woff2) format('woff2'),
+           url(https://newsocialforms.org/fonts/UN-11/UN-11-italic.woff) format('woff');
+      font-display: swap;
+      font-weight: 400;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: Tiny5x3;
+      src: url(https://newsocialforms.org/fonts/Tiny5x3GX.ttf) format('truetype');
+      font-display: block;
+    }
+
+    /* ── RESET / BASE ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: UN-11, Helvetica, sans-serif;
+      font-size: 17px;
+      color: #222;
+      background: #222;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4, h5, h6 { margin: 0 0 1em; }
+    p { margin: 0 0 1em; line-height: 1.45; }
+    p:last-child { margin-bottom: 0; }
+    ul { margin: 0; padding: 0; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      clip: rect(0,0,0,0); overflow: hidden;
+    }
+    .--unlist { list-style: none; }
+
+    /* ── TYPOGRAPHY SCALE ───────────────────────────────────── */
+    .h2--alt { font-size: clamp(28px, 4vw, 52px); font-weight: 700; line-height: 1.1; }
+    .h3 { font-size: clamp(24px, 3vw, 42px); font-weight: 700; line-height: 1.1; }
+    .h4 { font-size: clamp(20px, 2.5vw, 32px); font-weight: 700; line-height: 1.2; }
+    .h6 { font-size: 14px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .p--large { font-size: clamp(18px, 1.8vw, 22px); line-height: 1.5; }
+    .p--regular { font-size: 17px; line-height: 1.5; }
+    .p--small { font-size: 14px; line-height: 1.4; }
+    .mb-0 { margin-bottom: 0 !important; }
+    .--mw-lg { max-width: 720px; }
+    .--mw-md { max-width: 480px; }
+
+    /* ── SUBSECTION / PADDING ───────────────────────────────── */
+    .subsection { padding: 48px 12px; }
+    @media (min-width: 768px) { .subsection { padding: 72px 32px; } }
+    @media (min-width: 1280px) { .subsection { padding: 96px 48px; } }
+
+    /* ── BUTTON ─────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: .6em;
+      border: 1px solid #222; padding: .6em .8em;
+      font-family: UN-11, Helvetica, sans-serif; font-size: 16px; font-weight: 700;
+      color: #222; cursor: pointer; background: transparent;
+      transition: background-color 333ms ease; outline-color: #fa6537;
+    }
+    .btn:hover { background: rgba(34,34,34,.06); }
+    .btn .arrow-icon { display: flex; align-items: center; }
+    .btn .arrow-icon svg { width: 1.5em; height: 1.5em; }
+    .btn--light { border-color: #d9ddd4; color: #d9ddd4; }
+    .btn--filled-light { background: #d9ddd4; border-color: #d9ddd4; color: #222; }
+    .btn--filled-light:hover { background: #f1e6e6; border-color: #f1e6e6; }
+
+    /* ── NAV ────────────────────────────────────────────────── */
+    .primary-nav {
+      background: #222; height: 50px;
+      left: 0; top: 0; width: 100%; position: sticky; z-index: 10;
+      padding: 6px;
+    }
+    .primary-nav__inner {
+      display: flex; align-items: center; justify-content: space-between;
+      background: #d9ddd4; border-radius: 4px; height: 100%; padding: 0 12px;
+    }
+    .primary-nav__logo {
+      font-family: Tiny5x3, Helvetica, sans-serif;
+      font-size: 50px; font-weight: 150; text-transform: uppercase;
+      color: #222; height: 100%; display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      transition: font-weight 333ms;
+    }
+    .logo-nsfi { margin-top: -.1em; letter-spacing: 0; }
+    .logo-nsfi span { text-transform: lowercase; }
+    @media (min-width: 768px) {
+      .primary-nav { height: 55px; }
+    }
+    @media (min-width: 1280px) {
+      .primary-nav { height: 60px; }
+      .primary-nav__inner { padding: 0 24px; }
+    }
+
+    /* ── PAGE CONTENT WRAPPER ───────────────────────────────── */
+    .page__content { --sidescroll-sticky-top: 50px; }
+    @media (min-width: 768px)  { .page__content { --sidescroll-sticky-top: 55px; } }
+    @media (min-width: 1280px) { .page__content { --sidescroll-sticky-top: 60px; } }
+
+    /* ── SIDESCROLL ─────────────────────────────────────────── */
+    .sidescroll__height-placeholder { display: none; }
+    @media (orientation: landscape) and (min-width: 1280px) and (pointer: fine) {
+      .sidescroll__track {
+        display: flex; height: 100vh;
+        left: 0; overflow: hidden; position: sticky;
+        top: var(--sticky-top, 0); width: 100vw; z-index: 2;
+      }
+      .sidescroll__content {
+        height: 100vh;
+        transform-style: preserve-3d; will-change: transform;
+        transition: none;
+      }
+      .sidescroll__height-placeholder {
+        display: block; height: 8000px;
+        margin-top: calc(-100vh + var(--sidescroll-sticky-top));
+        pointer-events: none; width: 0;
+      }
+      .page__sidescroll-content {
+        display: flex;
+        height: calc(100vh - var(--sidescroll-sticky-top) + 2px);
+        margin-top: -4px; overflow: hidden;
+      }
+      .page__sidescroll-content > * { flex-shrink: 0; }
+    }
+
+    .page__sidescroll-content {
+      background-color: #222; position: relative; width: auto;
+    }
+
+    /* ── HERO TEXT ──────────────────────────────────────────── */
+    .section--text-hero {
+      height: 400px; overflow: hidden; width: 100%;
+      background: #222; position: relative;
+    }
+    .section--text-hero h1 {
+      color: #d9ddd4;
+      display: flex; flex-direction: column;
+      font-size: 40vw; font-weight: 160;
+      height: 100%; letter-spacing: -.02em;
+      line-height: .8em; margin: 0;
+      position: relative; text-transform: uppercase;
+      user-select: none; width: 100%;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .section--text-hero h1 {
+        animation: animate-font-weight 3s ease-in-out 1s forwards;
+        font-weight: 0;
+      }
+    }
+    .section--text-hero h1 > .hero-word { display: block; position: absolute; white-space: nowrap; }
+    .section--text-hero h1 > .hero-word:first-of-type  { left: .05em; top: -.1em; }
+    .section--text-hero h1 > .hero-word:nth-of-type(2)  { left: 50%; top: 50%; transform: translate(-50%,-50%); margin-top: -.025em; }
+    .section--text-hero h1 > .hero-word:last-of-type    { bottom: 0; right: .05em; }
+
+    .hero-letter {
+      cursor: crosshair; display: inline-block;
+      line-height: .8em; transform: translateZ(0);
+      transition: all 3s cubic-bezier(.22,1,.36,1);
+      will-change: font-weight;
+    }
+    .hero-letter.--active {
+      color: #f1e6e6;
+      transition: all 333ms cubic-bezier(.22,1,.36,1);
+      font-weight: 20 !important;
+    }
+
+    @media (min-width: 500px) {
+      .section--text-hero { height: 500px; }
+      .section--text-hero h1 { font-size: 240px; }
+    }
+    @media (min-width: 768px) {
+      .section--text-hero h1 { font-size: 270px; }
+      .section--text-hero h1 > .hero-word:first-of-type { left: 0; top: -.15em; }
+      .section--text-hero h1 > .hero-word:nth-of-type(2) { margin-top: -.05em; }
+      .section--text-hero h1 > .hero-word:last-of-type { bottom: -.05em; right: .05em; }
+    }
+    @media (min-width: 1280px) {
+      .section--text-hero { height: 700px; }
+      .section--text-hero h1 { font-size: 390px; }
+    }
+    @media (orientation: landscape) and (min-width: 1280px) and (pointer: fine) {
+      .section--text-hero { height: 85vh; }
+    }
+
+    @keyframes animate-font-weight {
+      0%   { font-weight: 160; }
+      50%  { font-weight: 20; }
+      100% { font-weight: 160; }
+    }
+
+    /* ── CATEGORY TAG ────────────────────────────────────────── */
+    .category-tag {
+      display: flex; align-items: center;
+      position: absolute; left: 0; top: 0;
+      margin: 48px 12px; font-size: 14px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .06em;
+      pointer-events: none;
+    }
+    .category-tag__icon {
+      font-size: 2em; font-weight: 100;
+      margin-right: .3em; margin-top: -.15em;
+    }
+    @media (min-width: 768px)  { .category-tag { margin: 72px 32px; } }
+    @media (min-width: 1280px) { .category-tag { margin: 96px 48px; } }
+    @media (orientation: landscape) and (min-width: 1280px) and (pointer: fine) {
+      .category-tag { margin: 32px 48px; }
+    }
+
+    /* ── INTRO SECTION ──────────────────────────────────────── */
+    .section-intro { position: relative; }
+    .section-intro .intro__what { background: #d9ddd4; }
+    .section-intro .intro__what-title { font-weight: 700; margin-top: 48px; }
+    .section-intro .intro__what-icons {
+      display: grid; gap: 12px;
+      grid-template-columns: repeat(6, minmax(0,1fr));
+      max-width: 420px;
+      font-family: Tiny5x3, Helvetica, sans-serif; font-weight: 140;
+    }
+    .section-intro .intro__what-icons li { font-size: 40px; }
+    .section-intro .intro__carousel {
+      aspect-ratio: 1; overflow: hidden;
+      background: #d9ddd4; position: relative;
+    }
+    .section-intro .intro__orgs { display: flex; flex-wrap: wrap; align-items: center; background: #d9ddd4; }
+    .section-intro .intro__orgs .p--regular { margin-bottom: 32px; width: 100%; }
+    .section-intro .intro__org { display: block; width: 80px; }
+    .section-intro .intro__org svg { height: 100%; width: 100%; }
+    .section-intro .intro__org.--ccc { margin-right: 24px; width: 230px; }
+
+    /* Carousel */
+    .carousel__slides { position: relative; width: 100%; height: 100%; }
+    .carousel__slide {
+      position: absolute; inset: 0; opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .carousel__slide.--active { opacity: 1; }
+    .carousel__slide img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+
+    @media (min-width: 768px) {
+      .section-intro { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); }
+      .section-intro .intro__what { grid-column: 1/-1; }
+      .section-intro .intro__carousel { grid-column: 1/6; }
+      .section-intro .intro__orgs { grid-column: 6/-1; padding: 32px; }
+      .section-intro .intro__org.--ccc { margin-right: 32px; width: 250px; }
+    }
+    @media (min-width: 960px) {
+      .section-intro .intro__what-title { margin-top: 72px; }
+      .section-intro .intro__what-icons li { font-size: 60px; }
+      .section-intro .intro__org { width: 100px; }
+      .section-intro .intro__org.--ccc { margin-right: 48px; width: 300px; }
+    }
+    @media (min-width: 1280px) {
+      .section-intro { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); grid-template-rows: 1fr auto; height: calc(100vh - 60px); }
+      .section-intro .intro__what { grid-column: 1/span 7; grid-row: 1/-1; display: flex; flex-direction: column; }
+      .section-intro .intro__what h1 { margin-bottom: 32px; }
+      .section-intro .intro__what-icons { margin-bottom: 48px; margin-top: auto; }
+      .section-intro .intro__carousel { align-items: center; aspect-ratio: unset; display: flex; grid-column: 8/-1; justify-content: center; }
+      .section-intro .intro__orgs { display: flex; grid-column: 8/-1; grid-row: 2/span 1; justify-content: flex-start; }
+      .section-intro .intro__orgs .p--regular { margin-bottom: 48px; }
+      .section-intro .intro__org { width: 100px; }
+      .section-intro .intro__org.--ccc { margin-right: 48px; width: 290px; }
+    }
+    @media (orientation: landscape) and (min-width: 1280px) and (pointer: fine) {
+      .section-intro { width: 1680px; }
+      .section-intro .intro__what { padding-bottom: 72px; padding-top: 72px; }
+      .section-intro .intro__orgs { padding-bottom: 72px; padding-top: 72px; }
+    }
+
+    /* ── PRINCIPLES SECTION ─────────────────────────────────── */
+    .section-img-text-cols { background: #222; }
+    .img-text-cols__intro-inner {
+      background: #a6cc2e; position: relative;
+      display: flex; flex-direction: column;
+    }
+    .img-text-cols__intro-inner .category-tag { margin-right: auto; }
+    .img-text-cols__intro-inner h1 { color: #222; }
+    .img-text-cols__list { display: grid; gap: 12px; position: relative; flex: 1 0 auto; }
+    .img-text-cols__list .subsection {
+      background: #9a91ff; color: #f1e6e6; padding: 0;
+    }
+    .img-text-cols__list .category-tag { margin: 24px 0; position: relative; }
+    .img-text-col__img {
+      background: #d9ddd4; border-radius: 6px 6px 0 0;
+      display: block; height: 350px; margin: 0; overflow: hidden;
+      position: relative; width: 100%;
+    }
+    .img-text-col__img img { width: 100%; height: 100%; object-fit: cover; }
+    .img-text-col__img figcaption {
+      position: absolute; bottom: 0; left: 0;
+      padding: 32px 12px 12px; color: #f1e6e6; font-size: 13px;
+    }
+    .img-text-col__text { padding: 48px 12px; display: flex; flex-direction: column; justify-content: flex-end; }
+    .img-text-col__text h3 {
+      margin-bottom: 48px;
+      text-shadow: -1px -1px 0 #222, 1px -1px 0 #222, -1px 1px 0 #222, 1px 1px 0 #222;
+    }
+    .img-text-col__text .category-tag { color: #222; }
+    .img-text-col__text p:last-of-type { margin-bottom: 0; }
+
+    @media (min-width: 960px) {
+      .section-img-text-cols { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .img-text-cols__intro { grid-row: 1/-1; }
+      .img-text-cols__intro-inner { height: calc(100vh - 63px); position: sticky; top: 55px; }
+      .img-text-cols__intro-inner h1 { margin-top: 0; }
+      .img-text-col__text { padding: 72px 32px; }
+    }
+    @media (orientation: landscape) and (min-width: 1280px) and (pointer: fine) {
+      .section-img-text-cols {
+        align-items: flex-start; height: 100%;
+        grid-template-columns: 6fr 14fr; grid-template-rows: 1fr;
+        width: 2800px;
+      }
+      .img-text-cols__intro { align-self: stretch; height: auto; }
+      .img-text-cols__intro-inner { height: 100%; position: relative; top: 0; }
+      .img-text-cols__list {
+        align-items: stretch; align-self: stretch;
+        grid-template-columns: repeat(3, minmax(0,1fr));
+        justify-content: center;
+      }
+      .img-text-cols__list .subsection { display: flex; flex-direction: column; justify-content: space-between; }
+      .img-text-cols__list .subsection:nth-of-type(2n) {
+        display: flex; flex-direction: column-reverse;
+      }
+      .img-text-cols__list .subsection:nth-of-type(2n) .img-text-col__img {
+        border-radius: 0 0 6px 6px;
+      }
+      .img-text-col__img { aspect-ratio: none; flex: 1 1 30%; height: auto; }
+      .img-text-col__text { flex: 1 0 auto; padding-bottom: 32px; padding-top: 32px; }
+    }
+
+    /* ── FORMAT / LIVING MAP SECTION ────────────────────────── */
+    .section-graphic-text .subsection { background: #d9ddd4; color: #222; height: 100%; }
+    .section-graphic-text .graphic-text__inner { display: grid; gap: 24px; }
+    .section-graphic-text .graphic-text__graphic svg { margin: auto; max-width: 500px; width: 80%; }
+    .graphic-dance-notation path { fill: #222; }
+    .graphic-dance-notation circle { fill: #a6cc2e; stroke: #222; stroke-width: 2px; }
+
+    @media (min-width: 960px) {
+      .section-graphic-text .graphic-text__inner {
+        align-items: center; gap: 12px;
+        grid-template-columns: repeat(2, minmax(0,1fr));
+        height: 100%; justify-content: center;
+      }
+    }
+    @media (min-width: 1280px) {
+      .section-graphic-text { height: calc(100vh - 60px); }
+    }
+    @media (orientation: landscape) and (min-width: 1280px) and (pointer: fine) {
+      .section-graphic-text { height: 100%; width: 1540px; }
+      .section-graphic-text .graphic-text__inner { grid-template-columns: 3fr 4fr; }
+    }
+
+    /* ── ACTIVITIES SECTION ─────────────────────────────────── */
+    .section-activities .base-section-inner { display: grid; grid-auto-rows: 1fr; }
+    .section-activities .activities__item { display: flex; align-items: center; }
+    .section-activities .activities__item-inner { width: 100%; }
+    .section-activities .activities__item-header { display: flex; align-items: center; margin-bottom: 24px; }
+    .section-activities .activities__item-counter {
+      border: 1px solid #222; height: 40px; margin-right: 6px; width: 40px;
+      display: flex; align-items: center; justify-content: center; font-size: 14px;
+    }
+    .section-activities .activities__item-title {
+      color: #a6cc2e; display: flex; flex: 1 1 auto;
+      justify-content: space-between; margin-top: -.1em;
+      font-family: Tiny5x3, Helvetica, sans-serif; font-size: 28px; font-weight: 150;
+      text-transform: uppercase;
+    }
+    .section-activities .activities__item-icon {
+      color: #222; font-size: .9em; font-weight: 120;
+      margin-left: auto; text-shadow: none;
+    }
+    .activities__item { padding: 48px 12px; border-bottom: 1px solid rgba(34,34,34,.2); }
+    .activities__item:last-child { border-bottom: none; }
+
+    @media (min-width: 768px) {
+      .section-activities .activities__item-counter { height: 45px; width: 45px; }
+    }
+    @media (min-width: 1280px) {
+      .section-activities .base-section-inner {
+        grid-template-columns: repeat(3, minmax(0,1fr)); grid-template-rows: 1fr;
+      }
+      .activities__item { border-bottom: none; border-right: 1px solid rgba(34,34,34,.2); }
+      .activities__item:last-child { border-right: none; }
+    }
+    @media (orientation: landscape) and (min-width: 1280px) and (pointer: fine) {
+      .section-activities { width: 840px; }
+      .section-activities .base-section-inner {
+        grid-template-columns: 1fr; grid-template-rows: repeat(3, minmax(0,1fr));
+        height: 100%;
+      }
+      .section-activities .activities__item-text { font-size: 16px; }
+      .activities__item { border-bottom: 1px solid rgba(34,34,34,.2); border-right: none; }
+      .activities__item:last-child { border-bottom: none; }
+    }
+
+    /* Base section for activities */
+    .section-activities { background: #d9ddd4; }
+
+    /* ── FUTURE SESSIONS SECTION ────────────────────────────── */
+    .section-future-sessions .subsection {
+      background: #d9ddd4; display: flex; flex-direction: column; height: 80vh;
+    }
+    .section-future-sessions .future-sessions__header { margin-bottom: 12px; margin-top: 24px; }
+    .section-future-sessions .future-sessions__list {
+      border-bottom: 2px solid #222; display: flex; flex: 1 1 auto;
+      min-height: 0; overflow: hidden; position: relative;
+    }
+    .section-future-sessions .future-sessions__list::after {
+      background: linear-gradient(#d9ddd4, transparent);
+      content: ''; height: 20px; left: 0;
+      position: absolute; top: 0; width: 100%;
+    }
+    .section-future-sessions ul { overflow-y: auto; width: 100%; }
+    .future-sessions__li {
+      align-items: center; border-bottom: 1px solid #222; color: #313131;
+      display: grid; gap: 12px;
+      grid-template-columns: 2em auto; padding-top: 12px; padding-bottom: 12px;
+    }
+    .future-sessions__li-counter {
+      height: 2em; padding: 10px; width: 1.5em;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .future-sessions__li-counter-svg { width: 100%; height: 100%; }
+    .future-sessions__li-title { grid-column: 2/-1; margin: 0; position: relative; top: -.1em; }
+    .future-sessions__li-text { grid-column: 1/-1; font-size: 16px; }
+
+    @media (min-width: 768px) {
+      .section-future-sessions .subsection { height: 65vh; }
+      .section-future-sessions .future-sessions__header { align-items: flex-start; display: flex; justify-content: flex-end; margin-bottom: 48px; }
+    }
+    @media (min-width: 960px) {
+      .future-sessions__li { align-items: center; grid-template-columns: 2em auto auto; padding-bottom: 32px; padding-top: 32px; }
+      .future-sessions__li-counter { height: 2.5em; width: 1.75em; }
+      .future-sessions__li-title { grid-column: 2/span 1; }
+      .future-sessions__li-text { font-size: 19px; grid-column: 3/-1; margin-bottom: 0; margin-left: auto; margin-right: 20px; width: 550px; }
+    }
+    @media (min-width: 1280px) {
+      .section-future-sessions .subsection { height: 90vh; }
+      .future-sessions__li-text { font-size: 20px; }
+    }
+    @media (orientation: landscape) and (min-width: 1280px) and (pointer: fine) {
+      .section-future-sessions { width: 1260px; }
+      .section-future-sessions .subsection { height: 100%; padding-bottom: 24px; }
+      .section-future-sessions .future-sessions__header { margin-bottom: 96px; margin-top: 32px; }
+    }
+
+    /* ── REGISTER / CONTACT SECTION ─────────────────────────── */
+    .section--contact-form {
+      background: #222; padding: 80px 0; position: relative;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .section--contact-form .contact-form__cta {
+      background: #9a91ff; margin: auto; max-width: 800px; padding: 12px; width: 90%;
+    }
+    .section--contact-form .contact-cta__inner {
+      border: 2px solid #d9ddd4; padding: 24px;
+    }
+    .section--contact-form .contact-cta__inner .h6 { color: #fff; font-weight: 700; margin-bottom: 12px; }
+    .section--contact-form .contact-cta__inner p { color: #fff; }
+    .section--contact-form .btn-join {
+      display: flex; align-items: center; justify-content: center; gap: .6em;
+      background: #d9ddd4; border: 2px solid #d9ddd4; border-top: none;
+      height: 100px; width: 100%;
+      font-family: UN-11, Helvetica, sans-serif; font-size: 18px; font-weight: 700;
+      color: #222; cursor: pointer; transition: background 333ms;
+    }
+    .section--contact-form .btn-join:hover { background: #f1e6e6; }
+    @media (min-width: 768px) {
+      .section--contact-form { padding: 100px 0; }
+      .section--contact-form .contact-form__cta { display: flex; }
+      .section--contact-form .contact-cta__inner { border-right: none; padding: 24px; }
+      .section--contact-form .btn-join { height: auto; padding: 24px 48px; width: auto; min-width: 300px; }
+    }
+    @media (orientation: landscape) and (min-width: 1280px) and (pointer: fine) {
+      .section--contact-form { align-items: center; padding: 0; width: 1260px; }
+      .section--contact-form .contact-form__cta { display: flex; max-width: 1000px; }
+      .section--contact-form .btn-join { width: 600px; }
+    }
+
+    /* ── FOOTER ─────────────────────────────────────────────── */
+    .site-footer {
+      background: #222; color: #d9ddd4;
+      padding: 48px 24px 36px;
+      display: flex; flex-direction: column; gap: 24px;
+    }
+    .site-footer__links { display: flex; gap: 24px; }
+    .site-footer__links a { font-size: 14px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .site-footer__links a:hover { color: #fff; }
+    .site-footer__brand {
+      font-family: Tiny5x3, Helvetica, sans-serif;
+      font-size: 36px; font-weight: 150; text-transform: uppercase; letter-spacing: 0;
+    }
+    .site-footer__email { font-size: 14px; }
+    .site-footer__email a:hover { color: #fff; }
+
+    /* ── DIALOG ─────────────────────────────────────────────── */
+    .dialog__overlay {
+      background: rgba(0,0,0,.8); inset: 0; position: fixed; z-index: 100;
+      display: none;
+    }
+    .dialog__overlay.--open { display: block; }
+    .dialog__content {
+      background: #d9ddd4; left: 50%; margin: 0;
+      max-height: 90vh; max-width: 850px; overflow-y: scroll;
+      position: fixed; top: 50%; transform: translate(-50%,-50%);
+      width: 90vw; z-index: 101; border-radius: 2px;
+    }
+    .dialog__close {
+      position: absolute; right: 8px; top: 8px;
+      width: 50px; height: 50px;
+      background: #d9ddd4; border: 2px solid #9a91ff; color: #222;
+      font-size: 32px; font-weight: 160; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-family: Tiny5x3, Helvetica, sans-serif;
+    }
+    .dialog__close:hover { font-weight: 80; }
+    .dialog__inner { padding: 48px 32px; }
+    .dialog__inner h3 { font-size: clamp(32px, 5vw, 80px); margin-bottom: 12px; }
+    .dialog__inner p { font-size: 16px; }
+    .dialog__form { margin-top: 32px; }
+    .form-field { margin-bottom: 24px; }
+    .form-field label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 4px; letter-spacing: .04em; text-transform: uppercase; }
+    .form-field input, .form-field textarea, .form-field select {
+      width: 100%; background: transparent;
+      border: none; border-bottom: 2px solid #222;
+      border-radius: 0; color: #222;
+      font-family: UN-11, Helvetica, sans-serif; font-size: 16px; font-weight: 700;
+      padding: .4em .4em; transition: background 333ms;
+    }
+    .form-field input:focus, .form-field textarea:focus { background: #f1e6e6; outline-color: #fa6537; }
+    .form-field input::placeholder, .form-field textarea::placeholder { color: #9a91ff; }
+    .form-field textarea { resize: none; min-height: 80px; }
+    .form-row { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+    .form-submit {
+      width: 100%; background: #9a91ff; border: none;
+      font-family: UN-11, Helvetica, sans-serif; font-size: 18px; font-weight: 700;
+      color: #222; padding: 16px; cursor: pointer; margin-top: 8px;
+      transition: background 333ms;
+    }
+    .form-submit:hover { background: #7b70ff; }
+
+    /* ── ARROW SVG ──────────────────────────────────────────── */
+    .icon-dot-arrow circle { fill: #222; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="primary-nav" style="--sticky-top:var(--sidescroll-sticky-top)">
+  <div class="primary-nav__inner">
+    <a href="#" class="primary-nav__logo" aria-label="Scroll to top">
+      <span class="logo-nsfi">n<span>SF</span>i</span>
+    </a>
+    <nav>
+      <button class="btn" id="open-dialog" type="button">
+        Join the Salon Series
+        <span class="arrow-icon" aria-hidden="true">
+          <svg class="icon-dot-arrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+            <circle cx="3" cy="9" r="2"/><circle cx="7" cy="9" r="2"/>
+            <circle cx="14" cy="12" r="2"/><circle cx="11" cy="15" r="2"/>
+            <circle cx="14" cy="6" r="2"/><circle cx="11" cy="3" r="2"/>
+            <circle cx="11" cy="9" r="2"/><circle cx="17" cy="9" r="2"/>
+          </svg>
+        </span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- MAIN SIDESCROLL WRAPPER -->
+<div class="page__content" style="--sticky-top:var(--sidescroll-sticky-top)">
+  <div class="sidescroll" style="--sticky-top:var(--sidescroll-sticky-top, 60px)">
+    <div class="sidescroll__track" style="--sticky-top:var(--sidescroll-sticky-top, 60px)">
+      <div class="sidescroll__content" id="sidescroll-content">
+        <div class="page__sidescroll-content">
+
+          <!-- ① HERO -->
+          <section class="section--text-hero" aria-label="New Social Forms">
+            <h1 aria-label="New Social Forms">
+              <div class="hero-word">
+                <span class="hero-letter">N</span><span class="hero-letter">e</span><span class="hero-letter">w</span>
+              </div>
+              <div class="hero-word">
+                <span class="hero-letter">S</span><span class="hero-letter">o</span><span class="hero-letter">c</span><span class="hero-letter">i</span><span class="hero-letter">a</span><span class="hero-letter">l</span>
+              </div>
+              <div class="hero-word">
+                <span class="hero-letter">F</span><span class="hero-letter">o</span><span class="hero-letter">r</span><span class="hero-letter">m</span><span class="hero-letter">s</span>
+              </div>
+            </h1>
+          </section>
+
+          <!-- ② INTRO -->
+          <section class="base-section section-intro" id="main">
+            <div class="intro__what subsection" style="position:relative">
+              <p class="p--small category-tag">
+                <span class="category-tag__icon" aria-hidden="true">@</span>About
+              </p>
+              <h1 class="intro__what-title h2--alt --mw-lg">
+                (Re)Designing the Social Architectures of Human Connection
+              </h1>
+              <p class="p--large --mw-lg">
+                New Social Forms brings together artists, technologists, researchers, and civic actors to explore, prototype, and scale the social architectures that strengthen connection and collective agency in a time of rapid technological and cultural change.
+              </p>
+              <ul class="intro__what-icons --unlist" role="presentation">
+                <li>✓</li><li>🐕</li><li>$</li><li>⌣</li><li>#</li><li>*</li>
+              </ul>
+            </div>
+
+            <div class="simple-image-carousel --bg-texture intro__carousel">
+              <div class="carousel__slides" id="carousel-slides">
+                <div class="carousel__slide --active">
+                  <img src="https://newsocialforms.org/.netlify/images?w=800&fm=jpg&q=90&url=%2Frococo-crowd.jpg"
+                    alt="A colorful painting of lavishly dressed aristocrats engaged in conversation">
+                </div>
+                <div class="carousel__slide">
+                  <img src="https://newsocialforms.org/.netlify/images?w=800&fm=jpg&q=90&url=%2Fblurry-dancers.jpg"
+                    alt="A blurry frenetic shot of a dancing crowd in a studio">
+                </div>
+                <div class="carousel__slide">
+                  <img src="https://newsocialforms.org/.netlify/images?w=800&fm=jpg&q=90&url=%2Fadobe-circle.jpg"
+                    alt="A group sits around a large pile of plants in a big adobe hall, in front of a mural">
+                </div>
+              </div>
+            </div>
+
+            <div class="intro__orgs subsection">
+              <p class="p--regular --mw-md">
+                New Social Forms is an initiative of the MIT Center for Constructive Communication at the MIT Media Lab, made possible by Google Xi.
+              </p>
+              <!-- MIT CCC Logo -->
+              <a href="https://www.ccc.mit.edu/" rel="noopener noreferrer" target="_blank" class="intro__org --ccc" aria-label="MIT Center for Constructive Communication">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 397 148" width="290">
+                  <g fill="#222" clip-path="url(#ccc-a)">
+                    <path d="M83.195.264c2.09.44 4.076.81 6.022 1.332 5.472 1.47 10.354 4.08 14.722 7.748 4.57 3.837 8.085 8.46 10.573 13.895 1.784 3.896 2.944 7.979 3.269 12.27.165 2.176.333 4.37.245 6.545-.197 4.864-1.299 9.54-3.251 14.003-2.366 5.41-5.85 9.984-10.149 13.951-.538.496-1.106.958-1.714 1.608-1.098.822-2.14 1.47-3.265 2.157-.883.527-1.685 1.016-2.585 1.523-.99.476-1.882.933-2.874 1.375-.812.248-1.519.53-2.238.774-5.009 1.703-10.119 2.705-15.427 2.094-2.492-.286-4.988-.595-7.447-1.075-1.811-.352-3.567-.998-5.44-1.533-.85-.47-1.622-.894-2.356-1.377-.286-.187-.488-.504-.688-.846 1.162-2.063 2.276-4.046 3.405-6.019 4.16-7.265 8.313-14.533 12.517-21.771.21-.36.858-.559 1.334-.64.639-.108 1.328.074 1.962-.046 2.871-.542 4.764-2.34 5.282-5.364.46-2.688-.671-4.974-3.263-6.536-2.311-1.393-4.758-1.166-6.844.466-2.091 1.635-3.22 3.872-2.348 6.63.366 1.158 1.065 2.208 1.662 3.407-1.528 2.687-3.163 5.557-4.794 8.43-3.24 5.71-6.466 11.43-9.73 17.126-.606 1.058-1.365 2.027-2.145 3.03a26.848 26.848 0 0 1-2.573-1.625c-2.113-2.136-4.298-4.106-6.304-6.248-3-3.206-5.151-7.015-6.652-11.12-2.128-5.82-3.08-11.819-2.456-18.095.497-5.01 1.716-9.758 3.936-14.215 2.37-4.759 5.5-8.938 9.585-12.403 4.83-4.097 10.187-7.028 16.349-8.411C71.151.937 72.796.61 74.437.264h8.758Z"/>
+                    <path d="M94.287 76.687c.893-.458 1.785-.915 2.86-1.347 5.606 9.546 11.03 19.067 16.474 28.622-1.282 1.18-1.984 2.687-2.079 4.415-.187 3.372 2.946 6.534 6.265 6.666 3.44.137 6.453-3.291 6.535-6.139.115-4.023-3.414-7.259-7.333-6.669-.424.063-1.115-.346-1.374-.742-.839-1.28-1.524-2.662-2.287-3.994-4.537-7.923-9.079-15.842-13.62-23.763a104.638 104.638 0 0 0 3.176-2.03c1.94-.654 3.807-1.355 5.734-1.758a51.256 51.256 0 0 1 6.697-.936 42.22 42.22 0 0 1 6.277-.006c4.078.308 7.997 1.34 11.78 2.946 5.462 2.318 10.111 5.777 14.011 10.235 3.866 4.421 6.658 9.466 8.289 15.181 1.226 4.298 1.714 8.655 1.53 13.096a39.64 39.64 0 0 1-2.708 12.914c-2.277 5.801-5.736 10.801-10.333 14.94-5.096 4.588-11.024 7.624-17.688 9.139-1.283.291-2.605.407-3.954.706-2.922.101-5.801.101-8.846-.001-1.384-.296-2.605-.463-3.816-.688-7.482-1.387-13.833-4.995-19.294-10.25-3.707-3.566-6.534-7.772-8.599-12.528-1.72-3.963-2.784-8.067-3.132-12.476-.083-.743-.18-1.38-.258-2.136.006-1.096-.006-2.071-.003-3.155.092-.744.17-1.378.265-2.129.192-1.35.337-2.589.548-3.816 1.289-7.522 4.69-13.985 9.786-19.539 1.568-1.709 3.391-3.179 5.097-4.758Z"/>
+                    <path d="M78.575 110.204c.097.636.194 1.273.187 2.076-.403 4.683-1.597 8.965-3.463 13.059-2.458 5.392-5.954 9.967-10.473 13.779-4.419 3.729-9.35 6.4-14.925 7.83-1.908.49-3.84.881-5.76 1.316-2.88 0-5.758 0-8.807-.099-1.392-.295-2.62-.447-3.83-.692-10.106-2.052-18.076-7.477-24.045-15.888-3.619-5.1-5.921-10.795-6.693-17.075-.123-.999-.334-1.988-.505-2.981 0-1.944 0-3.888.1-6.005.38-2.049.59-3.938.955-5.796 1.345-6.84 4.566-12.737 9.12-17.893 3.813-4.317 8.41-7.596 13.679-9.858 4.057-1.741 8.28-2.873 12.715-2.99 2.005-.052 4.018-.092 6.019.018 1.656.09 3.336.26 4.94.664 2.456.618 4.854 1.466 7.277 2.217.824.51 1.648 1.02 2.66 1.554 1.068.468 1.947.91 2.825 1.353.24.257.443.574.729.761.734.483 1.506.908 2.39 1.457.745.636 1.378 1.153 1.975 1.71 3.172 2.956 5.984 6.223 8.085 10.049 1.838 3.346 3.364 6.836 4.101 10.624.358 1.836.673 3.681 1.007 5.523-.078.634-.155 1.268-.367 2.011-10.625.108-21.115.102-31.606.12-.771.001-1.123-.187-1.471-1-1.075-2.504-3.212-3.991-5.79-3.94-3.521.071-6.181 2.55-6.388 6.329-.163 2.96 1.648 5.355 4.786 6.458 2.226.782 5.425-.496 6.827-2.65.412-.635.686-1.362 1.021-2.041h32.725Z"/>
+                    <text x="155" y="80" font-size="42" font-weight="700" font-family="Helvetica, sans-serif">MIT CCC</text>
+                  </g>
+                  <defs><clipPath id="ccc-a"><rect width="397" height="148"/></clipPath></defs>
+                </svg>
+              </a>
+              <!-- Google Xi Logo placeholder -->
+              <a href="https://xi.google/" rel="noopener noreferrer" target="_blank" class="intro__org" aria-label="Google Xi" style="width:80px">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 347 381" width="80">
+                  <text x="0" y="80" font-size="60" font-weight="700" font-family="Helvetica, sans-serif" fill="#222">Xi</text>
+                </svg>
+              </a>
+            </div>
+          </section>
+
+          <!-- ③ PRINCIPLES -->
+          <section class="base-section section-img-text-cols">
+            <div class="img-text-cols__intro">
+              <div class="img-text-cols__intro-inner subsection">
+                <p class="p--small category-tag">
+                  <span class="category-tag__icon">‡</span>Principles
+                </p>
+                <h1 class="h2--alt" style="margin-top:80px">WHY?</h1>
+                <p class="p--large">We live amid the collapse of civic, spiritual, and digital spaces that once held us together. Yet everywhere, new experiments in belonging are emerging.</p>
+                <p class="p--regular">New Social Forms exists to surface, connect, and advance these experiments.</p>
+                <p class="p--regular">Drawing on current research, age-old lived practice, and creative experimentation, we're helping map and promote a new field devoted to defining the social architectures that promote meaningful human connections.</p>
+              </div>
+            </div>
+            <div class="img-text-cols__list">
+              <!-- Principle 1 -->
+              <div class="subsection" style="background:#9a91ff;color:#f1e6e6">
+                <figure class="img-text-col__img">
+                  <img src="https://newsocialforms.org/.netlify/images?w=1228&fm=jpg&q=90&url=%2Fprinciple-conversations.jpg"
+                    alt="Two people examine images on slides over a softly lit table" loading="lazy">
+                  <figcaption>Taking inspiration from immersive theatre, DisCourse was an unconventional dinner series hosted in an MIT basement dressed-up as an archive of the future.</figcaption>
+                </figure>
+                <div class="img-text-col__text">
+                  <p class="p--small category-tag" style="position:relative;margin:24px 0">
+                    <span class="category-tag__icon" style="color:#222">‡</span>
+                    <span style="color:#222">Principles</span>
+                  </p>
+                  <h3 class="h3">CONVERSATIONS AS WORLDS</h3>
+                  <p>Immersive environments can create temporary worlds with their own social physics, liberating us from the invisible norms that keep us performing, guarded, or small. How do we design these temporary alternative realities?</p>
+                </div>
+              </div>
+              <!-- Principle 2 -->
+              <div class="subsection" style="background:#9a91ff;color:#f1e6e6">
+                <figure class="img-text-col__img">
+                  <img src="https://newsocialforms.org/.netlify/images?w=1228&fm=jpg&q=90&url=%2Fprinciple-ai.jpg"
+                    alt="A group sits around a lit-up mirror and discusses a projected image" loading="lazy">
+                  <figcaption>AI Seances are collaborative experiences which encourages collective reflection with an AI model.</figcaption>
+                </figure>
+                <div class="img-text-col__text">
+                  <p class="p--small category-tag" style="position:relative;margin:24px 0">
+                    <span class="category-tag__icon" style="color:#222">‡</span>
+                    <span style="color:#222">Principles</span>
+                  </p>
+                  <h3 class="h3">AI AS COLLECTIVE MIRROR</h3>
+                  <p>We turn to AI with our biggest questions — about meaning, purpose, connection — but we ask alone. What if AI could be used as a site for collective understanding and meaning-making?</p>
+                </div>
+              </div>
+              <!-- Principle 3 -->
+              <div class="subsection" style="background:#9a91ff;color:#f1e6e6">
+                <figure class="img-text-col__img">
+                  <img src="https://newsocialforms.org/.netlify/images?w=1228&fm=jpg&q=90&url=%2Fprinciple-rituals.jpg"
+                    alt="A metal tray holds a glowing stone lamp and pieces of dark marble" loading="lazy">
+                  <figcaption>In Light Rituals, people gathered around an altar to share and listen to community stories.</figcaption>
+                </figure>
+                <div class="img-text-col__text">
+                  <p class="p--small category-tag" style="position:relative;margin:24px 0">
+                    <span class="category-tag__icon" style="color:#222">‡</span>
+                    <span style="color:#222">Principles</span>
+                  </p>
+                  <h3 class="h3">RITUALIZED RECIPROCITY</h3>
+                  <p>How do you create social experiences which shift from consuming content to reciprocated vulnerability?</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ④ FORMAT / LIVING MAP -->
+          <section class="base-section section-graphic-text">
+            <div class="subsection" style="height:100%;display:flex;flex-direction:column;justify-content:center;position:relative">
+              <p class="p--small category-tag">
+                <span class="category-tag__icon">~</span>Format
+              </p>
+              <div class="graphic-text__inner">
+                <div class="graphic-text__text" style="padding-top:60px">
+                  <h2 class="h2--alt" style="margin-bottom:24px">A Living Map of Emerging Social Forms</h2>
+                  <p class="p--large">New Social Forms brings people together to explore how humans create meaning and connection. We do this through three core activities:</p>
+                </div>
+                <div class="graphic-text__graphic">
+                  <svg class="graphic-dance-notation" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 533 545" role="img">
+                    <text class="sr-only" font-size="0">An abstract arrangement of lines and dots, symbolizing a new form of social notation</text>
+                    <path d="m325.2 446.9 10.6-11.4-15.2-3.5zm2.7-11.9 1.3.3c6.5-32.3 9-78.8-3.3-123.8-12.2-45-39.1-88.5-91.3-114.5l-.6 1.2-.6 1.2c51.4 25.6 77.9 68.4 90 112.8 12 44.5 9.6 90.6 3.2 122.6zm-43.5 86 7.2 13.8 8.4-13.2zm98.3-116.7h-1.4c-1 28.8-6.6 68.3-20 96.1-6.8 13.9-15.4 24.7-26.1 29.8s-23.8 4.9-39.9-3.9l-.6 1.2-.7 1.2c16.7 9 30.7 9.6 42.3 4s20.6-17 27.4-31.1c13.7-28.3 19.3-68.3 20.3-97.3zm133.8-24.6 7.4-13.7-15.6.4zm-99.7-161.4-1.2-.7-2.1 3.7-.2.8q0 .7.9 1.4.8.2 1.1 0l.7-.1 3.1-2 5-3.1a57 57 0 0 1 32.2-10.1c12.4.8 25.9 8.4 36.9 32s19.5 63.1 21.6 127.3h2.7C515.3 303 506.9 263 495.6 239c-11.3-24.2-25.5-32.6-39.2-33.5a59 59 0 0 0-33.8 10.5l-5 3.2-2.7 1.7h-.2.2l.5.2q.7.4.6 1 0 .2 0 0l.6-1 1.3-2z"/>
+                    <path d="m379.9 338.5 6.7-14-15.5 1.1zm83.4-224.3 1.1-.7c-9.4-15.1-21-29-32.6-36.6-5.9-3.7-11.9-6-17.7-5.7a23 23 0 0 0-16.5 8.5c-10 11.1-17.6 34-21.5 73.2-4 39.3-4 95.5 1.5 173.6h1.4l1.3-.1c-5.6-78.1-5.5-134.1-1.6-173.2 4-39.3 11.6-61.3 20.9-71.7q7-7.5 14.6-7.6 7.6-.2 16.1 5.3a118 118 0 0 1 31.8 35.7zM253.5 276l12.2 9.7 2.3-15.4zm12 1.8-.2 1.3c13.1 1.6 27.7 2.2 41.3 1.1a90 90 0 0 0 36.5-9.5 33 33 0 0 0 18-25.7c1.3-11.8-3-27-14.6-46l-1.2.6-1.1.7c11.5 19 15.4 33.4 14.2 44.4a30 30 0 0 1-16.7 23.7c-9.3 5.3-21.8 8-35.3 9.1a211 211 0 0 1-40.7-1zm-51.8-23.7-9.6-12.2-5.8 14.4zm-177.3-7 1.3-.5c-3-6.4-4-13-1.8-18.6 2.2-5.4 7.8-10 19-12s27.8-1.3 51.8 4 55 15 95.2 30.9l.5-1.3.5-1.3a639 639 0 0 0-95.6-31c-24.2-5.3-41.2-6.1-53-4-11.6 2-18.2 7.1-20.9 13.7s-1.3 14 1.8 20.7zM77.6 411l-9.1-7.1-1.5 11.4zm-8.9-1.3.2-1c-16-3-35.3-11.5-48.2-25.7-12.8-14-19.3-33.7-9.4-59.3l-1-.4-1-.4c-10 26.4-3.4 46.9 10 61.5a93 93 0 0 0 49.2 26.3z"/>
+                    <path d="m240.5 468.2 1.1-15.5-14 6.8zm-5.3-11 1.3-.3c-4.7-14.4-3.7-34.4 10.3-55.6s41-43.7 88.7-62.8l-.5-1.2-.5-1.3c-48 19.2-75.6 42-90 63.8-14.4 21.9-15.6 42.7-10.6 57.9zm99.8-120 .5 1.3c54.6-21.8 83.3-44.9 96.8-65s11.9-37.5 5.8-47.3l-1.1.7-1.2.7c5.4 8.8 7.3 25-5.8 44.4-13 19.5-41.1 42.3-95.5 64zm117.8-204.9-14-6.8L440 141zM216 54.2l-.6 1.2a1613 1613 0 0 0 115.3 49.1c21.4 8 42.7 15.4 61.6 20.7 19 5.4 35.8 8.9 48.4 9.3v-2.7c-12.2-.4-28.7-3.8-47.6-9.2S353 110 331.7 102a1620 1620 0 0 1-115.1-49z"/>
+                    <path d="m197.1 164.9 14-6.7-12.8-8.8zm6.9-10 .8 1c10.7-8.4 36.4-18.8 90.1-24.5l-.1-1.3-.2-1.3c-53.8 5.6-80.1 16.1-91.4 25zm90.8-24.8.1 1.3c39.2-4 60-14.3 69.9-25.8a28 28 0 0 0 4.5-32.3l-1.2.6-1.2.6c3.8 7.3 5 18.7-4.2 29.3s-29.1 20.9-68 25z"/>
+                    <path d="m324.2 155.4-.5-15.5-13.3 8.2zm-6.4-10.3 1.1-.7c-21.4-34.2-51.4-78-77.3-106.9A206 206 0 0 0 223 19.1a63 63 0 0 0-16-10.7c-4.9-2-9.3-2.3-13 0q-5.4 3.2-7.3 13.2l1.3.2 1.4.3q1.9-9.3 6-11.5 3.8-2.3 10.5.3 6.8 2.8 15.4 10.2 8.5 7.4 18.2 18.3c25.8 28.6 55.7 72.3 77.1 106.4zM279 329l-8-13.4-7.6 13.6zm-10.6-5.9.7-1.2c-53.8-32-147-115.7-160.2-240.8l-1.3.1-1.3.2C119.6 207.7 213.6 292 267.7 324.3z"/>
+                    <path d="m162.5 325.7-2.5-15.4-12.1 9.9zm-66-246.1-1.3-.2a398 398 0 0 0 5 108.2c8 43.7 23.9 91 53.5 129.5l1-.8 1.2-.8c-29.3-38-45.2-85-53-128.4a395 395 0 0 1-5-107.4zm99.6 236.8 2.5 15.4 12.1-9.8zm7.7 9.4-1.1.8a80 80 0 0 1 6.7 76.3C196.8 434.7 164 471.4 95.3 508l.6 1.2.7 1.2c69-36.8 102.4-73.9 115.3-106.5a83 83 0 0 0-7-78.8zm275.6 89.7-11-11.1-4.1 15zm-11.7-3.2.3-1.3a743 743 0 0 0-128.6-24c-20-1.3-37.5-.6-49.2 3.4q-9 3-13.3 9a18 18 0 0 0-1.9 15.3l1.4-.3 1.3-.4q-2.1-8.1 1.5-13 3.3-5.2 11.8-8c11.3-3.9 28.2-4.6 48.2-3.3 39.7 2.7 90.5 13.8 128.1 23.9zm-304.9-65.4-10.6-11.4-4.6 14.9zm-11.6-3.6.4-1.3c-15-4.9-34.6-12.5-52.5-22-18-9.5-34.2-21-42.8-33.4l-1.1.7-1.1.8c9 13 25.6 24.7 43.7 34.3a348 348 0 0 0 53 22.2z"/>
+                    <circle cx="108.6" cy="415.5" r="16.2"/>
+                    <circle cx="479.4" cy="129.3" r="16.2"/>
+                    <circle cx="332.7" cy="177" r="16.2"/>
+                    <circle cx="385.8" cy="365.1" r="16.2"/>
+                    <circle cx="513.3" cy="411.7" r="16.2"/>
+                    <circle cx="253.8" cy="498.3" r="16.2"/>
+                    <circle cx="191.4" cy="197.7" r="16.2"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ⑤ ACTIVITIES -->
+          <section class="base-section section-activities">
+            <div class="base-section-inner">
+              <div class="activities__item">
+                <div class="activities__item-inner">
+                  <div class="activities__item-header">
+                    <div class="activities__item-counter">1</div>
+                    <div class="activities__item-title">
+                      SALONS
+                      <span class="activities__item-icon">*</span>
+                    </div>
+                  </div>
+                  <p class="activities__item-text">We convene intimate, cross-disciplinary groups to actively experiment with new gathering formats and rituals. These in-person and virtual salons aren't just discussions about social forms — they're experiences of them, where participants prototype new approaches, document what works, and collectively build a living archive of knowledge.</p>
+                </div>
+              </div>
+              <div class="activities__item">
+                <div class="activities__item-inner">
+                  <div class="activities__item-header">
+                    <div class="activities__item-counter">2</div>
+                    <div class="activities__item-title">
+                      RESEARCH
+                      <span class="activities__item-icon">◊</span>
+                    </div>
+                  </div>
+                  <p class="activities__item-text">We're building a living database of social forms gathered through collective experimentation. Drawing on both traditional academic research and practice-based approaches, we articulate patterns, develop shared language, and document what works as a way to create an open repository of definitions, principles, use cases, and tested approaches that anyone can learn from and build on.</p>
+                </div>
+              </div>
+              <div class="activities__item">
+                <div class="activities__item-inner">
+                  <div class="activities__item-header">
+                    <div class="activities__item-counter">3</div>
+                    <div class="activities__item-title">
+                      PROTOTYPING
+                      <span class="activities__item-icon">[]</span>
+                    </div>
+                  </div>
+                  <p class="activities__item-text">We support practitioners experimenting with new social forms through small grants and collaborative development. These funded experiments, including rituals, tools, gathering formats, and hybrid spaces, serve as live case studies that the community learns from. Grantees share their findings with the salon, contributing practical insights to our growing database of social forms.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ⑥ FUTURE SESSIONS -->
+          <section class="base-section section-future-sessions">
+            <div class="subsection">
+              <p class="p--small category-tag">
+                <span class="category-tag__icon">*</span>Salons
+              </p>
+              <div class="future-sessions__header" style="padding-top:80px">
+                <h2 class="h2--alt" style="margin-bottom:0">Future Session Topics</h2>
+              </div>
+              <div class="future-sessions__list">
+                <ul class="--unlist">
+                  <li class="future-sessions__li">
+                    <div class="future-sessions__li-counter"><span>1</span></div>
+                    <h3 class="h4 future-sessions__li-title">DECISIONMAKING <span style="color:#9a91ff">spaces</span></h3>
+                    <p class="future-sessions__li-text">How are democratic publics being reimagined through experimental architectures?</p>
+                  </li>
+                  <li class="future-sessions__li">
+                    <div class="future-sessions__li-counter"><span>2</span></div>
+                    <h3 class="h4 future-sessions__li-title">ARTWORLD <span style="color:#9a91ff">spaces</span></h3>
+                    <p class="future-sessions__li-text">How can art function as a laboratory for alternative social contracts?</p>
+                  </li>
+                  <li class="future-sessions__li">
+                    <div class="future-sessions__li-counter"><span>3</span></div>
+                    <h3 class="h4 future-sessions__li-title">THERAPEUTIC <span style="color:#9a91ff">spaces</span></h3>
+                    <p class="future-sessions__li-text">How are therapeutic practices being reconfigured?</p>
+                  </li>
+                  <li class="future-sessions__li">
+                    <div class="future-sessions__li-counter"><span>4</span></div>
+                    <h3 class="h4 future-sessions__li-title">DIGITAL LIFE <span style="color:#9a91ff">spaces</span></h3>
+                    <p class="future-sessions__li-text">How are new architectures of online connection being imagined and tested?</p>
+                  </li>
+                  <li class="future-sessions__li">
+                    <div class="future-sessions__li-counter"><span>5</span></div>
+                    <h3 class="h4 future-sessions__li-title">ENTERPRISE <span style="color:#9a91ff">spaces</span></h3>
+                    <p class="future-sessions__li-text">How do corporations engineer spaces of meaning, cohesion, and trust under conditions of distributed work and automation?</p>
+                  </li>
+                  <li class="future-sessions__li">
+                    <div class="future-sessions__li-counter"><span>6</span></div>
+                    <h3 class="h4 future-sessions__li-title">RELIGIOUS <span style="color:#9a91ff">spaces</span></h3>
+                    <p class="future-sessions__li-text">How are religious gatherings evolving as sites of collective meaning, ritual innovation, and interfaith dialogue?</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- ⑦ REGISTER -->
+          <section class="base-section section--contact-form">
+            <p class="h6" style="color:#9a91ff;letter-spacing:.1em;margin-bottom:24px">REGISTER</p>
+            <div class="contact-form__cta">
+              <div class="contact-cta__inner">
+                <p class="h6">JOIN US IN EXPLORING AND PILOTING NEW SOCIAL FORMS</p>
+                <p class="p--regular" style="color:#f1e6e6">Are you hosting gatherings, researching connection, or designing new social tools? Do you want to participate in our salons, research or prototyping work? We'd love to hear from you.</p>
+              </div>
+              <button class="btn-join" id="open-dialog-2" type="button">
+                Join the Salon Series
+                <svg class="icon-dot-arrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18" width="24" height="24">
+                  <circle cx="3" cy="9" r="2" fill="#222"/><circle cx="7" cy="9" r="2" fill="#222"/>
+                  <circle cx="14" cy="12" r="2" fill="#222"/><circle cx="11" cy="15" r="2" fill="#222"/>
+                  <circle cx="14" cy="6" r="2" fill="#222"/><circle cx="11" cy="3" r="2" fill="#222"/>
+                  <circle cx="11" cy="9" r="2" fill="#222"/><circle cx="17" cy="9" r="2" fill="#222"/>
+                </svg>
+              </button>
+            </div>
+          </section>
+
+        </div><!-- /page__sidescroll-content -->
+      </div><!-- /sidescroll__content -->
+    </div><!-- /sidescroll__track -->
+
+    <!-- Height placeholder for scroll-driven horizontal motion -->
+    <div class="sidescroll__height-placeholder"></div>
+
+  </div><!-- /sidescroll -->
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer__links">
+      <a href="https://www.instagram.com/newsocialforms/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.linkedin.com/company/new-social-forms/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
+    <div class="site-footer__brand">New Social Forms</div>
+    <div class="site-footer__email">
+      Questions? <a href="mailto:hello@newsocialforms.org">hello@newsocialforms.org</a>
+    </div>
+  </footer>
+
+</div><!-- /page__content -->
+
+<!-- REGISTRATION DIALOG -->
+<div class="dialog__overlay" id="dialog-overlay" role="dialog" aria-modal="true" aria-label="Join the Salon Series">
+  <div class="dialog__content">
+    <button class="dialog__close" id="close-dialog" aria-label="Close">✕</button>
+    <div class="dialog__inner">
+      <h3>Join the Salon Series</h3>
+      <p>Tell us about yourself and how you'd like to participate.</p>
+      <form class="dialog__form" id="contact-form" onsubmit="handleFormSubmit(event)">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="f-name">Name</label>
+            <input type="text" id="f-name" name="name" placeholder="Your name" required>
+          </div>
+          <div class="form-field">
+            <label for="f-email">Email</label>
+            <input type="email" id="f-email" name="email" placeholder="your@email.com" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="f-org">Organization</label>
+            <input type="text" id="f-org" name="organization" placeholder="Where you work">
+          </div>
+          <div class="form-field">
+            <label for="f-website">Website</label>
+            <input type="url" id="f-website" name="website" placeholder="https://...">
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="f-interest">Interest</label>
+          <select id="f-interest" name="interest">
+            <option value="">Select your interest...</option>
+            <option value="salons">Participating in Salons</option>
+            <option value="research">Research Collaboration</option>
+            <option value="prototyping">Prototyping Grants</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="f-message">Message</label>
+          <textarea id="f-message" name="message" placeholder="Tell us about your work and what brings you here..." rows="4"></textarea>
+        </div>
+        <button type="submit" class="form-submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── SIDESCROLL ─────────────────────────────────────────────── */
+(function() {
+  var content = document.getElementById('sidescroll-content');
+  var placeholder = document.querySelector('.sidescroll__height-placeholder');
+
+  function isSidescroll() {
+    return window.matchMedia('(orientation: landscape) and (min-width: 1280px) and (pointer: fine)').matches;
+  }
+
+  function updateScroll() {
+    if (!isSidescroll()) {
+      content.style.transform = '';
+      return;
+    }
+    var scrollTop = window.scrollY;
+    var navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sidescroll-sticky-top') || '60');
+    var maxScroll = document.body.scrollHeight - window.innerHeight;
+    var contentW = content.scrollWidth;
+    var viewW = window.innerWidth;
+    var maxTranslate = -(contentW - viewW);
+    var ratio = maxScroll > 0 ? scrollTop / maxScroll : 0;
+    var translateX = ratio * maxTranslate;
+    content.style.transform = 'translate3d(' + translateX + 'px, 0px, 0px)';
+  }
+
+  window.addEventListener('scroll', updateScroll, { passive: true });
+  window.addEventListener('resize', updateScroll, { passive: true });
+  updateScroll();
+})();
+
+/* ── HERO LETTER MOUSEOVER ──────────────────────────────────── */
+(function() {
+  var letters = document.querySelectorAll('.hero-letter');
+  letters.forEach(function(letter) {
+    letter.addEventListener('mouseenter', function() {
+      this.classList.add('--active');
+    });
+    letter.addEventListener('mouseleave', function() {
+      var el = this;
+      setTimeout(function() { el.classList.remove('--active'); }, 333);
+    });
+  });
+})();
+
+/* ── IMAGE CAROUSEL ─────────────────────────────────────────── */
+(function() {
+  var slides = document.querySelectorAll('.carousel__slide');
+  var current = 0;
+  if (slides.length < 2) return;
+  setInterval(function() {
+    slides[current].classList.remove('--active');
+    current = (current + 1) % slides.length;
+    slides[current].classList.add('--active');
+  }, 3500);
+})();
+
+/* ── DIALOG ─────────────────────────────────────────────────── */
+var overlay = document.getElementById('dialog-overlay');
+function openDialog() { overlay.classList.add('--open'); document.body.style.overflow = 'hidden'; }
+function closeDialog() { overlay.classList.remove('--open'); document.body.style.overflow = ''; }
+
+document.getElementById('open-dialog').addEventListener('click', openDialog);
+document.getElementById('open-dialog-2').addEventListener('click', openDialog);
+document.getElementById('close-dialog').addEventListener('click', closeDialog);
+overlay.addEventListener('click', function(e) { if (e.target === overlay) closeDialog(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeDialog(); });
+
+function handleFormSubmit(e) {
+  e.preventDefault();
+  var form = document.getElementById('contact-form');
+  form.innerHTML = '<p style="font-size:24px;font-weight:700;padding:48px 0">Thank you! We\'ll be in touch soon.</p>';
+  setTimeout(closeDialog, 2500);
+}
+</script>
+
+</body>
+</html>
